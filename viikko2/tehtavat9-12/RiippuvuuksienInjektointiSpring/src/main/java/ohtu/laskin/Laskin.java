@@ -5,24 +5,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Laskin {
-    private IO io;
+
 
     @Autowired
-    public Laskin(IO io) {
-        this.io = io;
-    }
-    
+    private IO io;
+
     public void suorita(){
         io.print("LASKIN");
         while( true ) {
             io.print("luku 1: ");
             int luku1 = io.nextInt();
             if ( luku1==-9999  ) return;
-            
+
             io.print("luku 2: ");
-            int luku2 = io.nextInt();           
+            int luku2 = io.nextInt();
             if ( luku2==-9999 ) return;
-            
+
             int vastaus = laskeSumma(luku1, luku2);
             io.print("summa: "+vastaus+"\n");
         }
@@ -30,6 +28,6 @@ public class Laskin {
 
     private int laskeSumma(int luku1, int luku2) {
         return luku1+luku2;
-    }         
-   
+    }
+
 }

@@ -2,13 +2,16 @@ package ohtu;
 
 import ohtu.verkkokauppa.Kauppa;
 import ohtu.verkkokauppa.VKKirjanpito;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
 
     public static void main(String[] args) {
-        Kauppa kauppa = new Kauppa(new ohtu.verkkokauppa.VKVarasto(new ohtu.verkkokauppa.VKKirjanpito()),
-                 new ohtu.verkkokauppa.VKPankki(new ohtu.verkkokauppa.VKKirjanpito()),
-                new ohtu.verkkokauppa.VKViitegeneraattori());
+
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        Kauppa kauppa = ctx.getBean(Kauppa.class);
 
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
         kauppa.aloitaAsiointi();

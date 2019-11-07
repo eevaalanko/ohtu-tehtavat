@@ -1,12 +1,13 @@
 package ohtu.verkkokauppa;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class VKPankki implements Pankki {
 
+    @Autowired
     private Kirjanpito kirjanpito;
-
-    public VKPankki(Kirjanpito kirjanpito) {
-        this.kirjanpito = kirjanpito;
-    }
 
     @Override
     public boolean tilisiirto(String nimi, int viitenumero, String tililta, String tilille, int summa) {
