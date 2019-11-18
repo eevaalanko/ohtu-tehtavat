@@ -8,6 +8,7 @@ public class Player {
     private int goals;
     private int assists;
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -40,16 +41,23 @@ public class Player {
         this.goals = goals;
     }
 
-    public int getAssists() {
-        return assists;
-    }
-
     public void setAssists(int assists) {
         this.assists = assists;
     }
 
+    public int getAssists() {
+        return assists;
+    }
+
+
+    public int getResults() {
+        return assists + goals;
+    }
+
     @Override
     public String toString() {
-        return name + " team " + team + " goals " + goals + " assists " + assists;
+        return name + " " + team + " " + goals + " + " + assists + " = " + getResults();
     }
+
+
 }

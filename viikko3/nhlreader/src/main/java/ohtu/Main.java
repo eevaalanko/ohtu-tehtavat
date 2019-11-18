@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -26,7 +24,9 @@ public class Main {
         final List<Player> finnPlayers =
                 Arrays.stream(mapper.fromJson(bodyText, Player[].class))
                         .filter(p -> p.getNationality().equals("FIN"))
+                        .sorted(Comparator.comparing(Player::getResults).reversed())
                         .collect(Collectors.toList());
+
 
 
 /*        System.out.println("Oliot:");
