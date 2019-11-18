@@ -16,16 +16,51 @@ public class Stepdefs {
     WebDriver driver = new HtmlUnitDriver();
     String baseUrl = "http://localhost:4567";
 
+
+
+    @Given("new user is selected")
+    public void newUserIsSelected() {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));
+        element.click();
+    }
+
+    @When("correct username {string} and password {string} and matching password confirmation are given")
+    public void correctUsernameAndPasswordAndConfirmationAreGiven(String username, String password) {
+        addNewUserWith(username, password, password);
+    }
+
+    @When("incorrect username {string} and password {string} and matching password confirmation are given")
+    public void incorrectUsernameAndPasswordAndConfirmationAreGiven(String username, String password) {
+        addNewUserWith(username, password, password);
+    }
+
+    @When("correct username {string} and password {string} and unmatching password confirmation are given")
+    public void correctUsernameAndIncorrectPasswordAndConfirmationAreGiven(String username, String password) {
+        addNewUserWith(username, password, "pöö");
+    }
+
+    @Then("a new user is created")
+    public void userIsCreated() {
+        pageHasContent("Welcome to Ohtu Application!");
+    }
+
+    @Then("user is not created and error {string} is reported")
+    public void userIsNotCreated(String error) {
+        pageHasContent(error);
+    }
+
+
+    @When("correct username {string} and password {string} are given")
+    public void correctUsernameAndPasswordAreGiven(String username, String password) {
+        logInWith(username, password);
+    }
+
     @Given("login is selected")
     public void loginIsSelected() {
         driver.get(baseUrl);
         WebElement element = driver.findElement(By.linkText("login"));
         element.click();
-    }
-
-    @When("correct username {string} and password {string} are given")
-    public void correctUsernameAndPasswordAreGiven(String username, String password) {
-        logInWith(username, password);
     }
 
     @Then("user is logged in")
@@ -77,6 +112,18 @@ public class Stepdefs {
         element = driver.findElement(By.name("password"));
         element.sendKeys(password);
         element = driver.findElement(By.name("login"));
+        element.submit();
+    }
+
+    private void addNewUserWith(String username, String password, String passwordConfirmation) {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(passwordConfirmation);
+        element = driver.findElement(By.name("signup"));
         element.submit();
     }
 }
