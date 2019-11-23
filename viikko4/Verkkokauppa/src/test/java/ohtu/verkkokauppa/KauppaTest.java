@@ -7,6 +7,36 @@ import static org.mockito.Mockito.*;
 
 public class KauppaTest {
 
+
+    @Test
+    public void ostoksenAlettuaEdellinenOstosOnNollattuJaUusiViiteLuodaan() {
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(42);
+
+        Varasto varasto = mock(Varasto.class);
+        when(varasto.saldo(1)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+
+        // tehdään 1. ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.tilimaksu("pekka", "12345");
+
+        // tehdään 2. ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.tilimaksu("pekka", "12345");
+
+        // tarkistetaan että tässä vaiheessa viitegeneraattorin metodia uusi()
+        // on kutsuttu kaksi kertaa
+        verify(viite, times(2)).uusi();
+        // tarkistetaan että tässä vaiheessa viitegeneraattorin metodia tilisiirto()
+        // on kutsuttu kaksi kertaa
+        verify(pankki, times(2)).tilisiirto("pekka", 42, "12345", "33333-44455",5);
+    }
+
     @Test
     public void ostoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaan() {
         // luodaan ensin mock-oliot
