@@ -52,7 +52,7 @@ public class KauppaTest {
     }
 
     @Test
-    public void UseammanOstoksenPaatyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaParametreilla() {
+    public void UseammanEriOstoksenPaatyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaParametreilla() {
         Pankki pankki = mock(Pankki.class);
         Viitegeneraattori viite = mock(Viitegeneraattori.class);
         when(viite.uusi()).thenReturn(42);
@@ -69,5 +69,43 @@ public class KauppaTest {
         k.tilimaksu("pekka", "12345");
 
         verify(pankki).tilisiirto("pekka", 42, "12345", "33333-44455",8);
+    }
+
+    @Test
+    public void UseammanSamanOstoksenPaatyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaParametreilla() {
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(42);
+
+        Varasto varasto = mock(Varasto.class);
+        when(varasto.saldo(1)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+
+        verify(pankki).tilisiirto("pekka", 42, "12345", "33333-44455",10);
+    }
+
+    @Test
+    public void VarastostaLoppuneenOstoksenPaatyttyaPankinMetodiaTilisiirtoKutsutaanOikeillaParametreilla() {
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(42);
+
+        Varasto varasto = mock(Varasto.class);
+        when(varasto.saldo(1)).thenReturn(10);
+        when(varasto.saldo(2)).thenReturn(0);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "mehu", 3));
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(2);     // ostetaan tuotetta numero 1 eli mehua
+        k.tilimaksu("pekka", "12345");
+
+        verify(pankki).tilisiirto("pekka", 42, "12345", "33333-44455",5);
     }
 }
