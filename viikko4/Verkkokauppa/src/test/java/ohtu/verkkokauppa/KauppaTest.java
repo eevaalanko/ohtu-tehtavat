@@ -138,4 +138,22 @@ public class KauppaTest {
 
         verify(pankki).tilisiirto("pekka", 42, "12345", "33333-44455",5);
     }
+
+    @Test
+    public void LisatynTuotteenPoistoPalauttaaTuotteenVarastoon() {
+        Pankki pankki = mock(Pankki.class);
+        Viitegeneraattori viite = mock(Viitegeneraattori.class);
+        when(viite.uusi()).thenReturn(42);
+
+        Varasto varasto = mock(Varasto.class);
+        when(varasto.saldo(1)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+
+        Kauppa k = new Kauppa(varasto, pankki, viite);
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.poistaKorista(1);     // poistetaan tuote 1 korista
+
+        verify(varasto, times(1)).palautaVarastoon(new Tuote(1, "maito", 5));
+    }
 }
