@@ -1,5 +1,6 @@
 package laskin;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class Erotus extends Komento {
@@ -7,8 +8,8 @@ public class Erotus extends Komento {
     private final TextField syotekentta;
     private final Sovelluslogiikka sovellus;
     private String viimeArvo;
-    public Erotus(TextField tuloskentta, TextField syotekentta,  Sovelluslogiikka sovellus) {
-        super(tuloskentta, syotekentta,  sovellus);
+    public Erotus(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo,  Sovelluslogiikka sovellus) {
+        super(tuloskentta, syotekentta, nollaa, undo, sovellus);
         this.tuloskentta = tuloskentta;
         this.syotekentta = syotekentta;
         this.sovellus = sovellus;

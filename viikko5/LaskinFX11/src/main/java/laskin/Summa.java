@@ -1,5 +1,6 @@
 package laskin;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class Summa extends Komento {
@@ -12,8 +13,8 @@ public class Summa extends Komento {
 
 
 
-    public Summa(TextField tuloskentta, TextField syotekentta, Sovelluslogiikka sovellus) {
-        super(tuloskentta, syotekentta,  sovellus);
+    public Summa(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo, Sovelluslogiikka sovellus) {
+        super(tuloskentta, syotekentta,  nollaa, undo, sovellus);
         this.tuloskentta = tuloskentta;
         this.syotekentta = syotekentta;
         this.sovellus = sovellus;
