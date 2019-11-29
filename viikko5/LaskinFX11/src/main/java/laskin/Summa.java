@@ -28,7 +28,6 @@ public class Summa extends Komento {
 
     @Override
     public void peru() {
-        System.out.println("poooop  " + getViimeArvo());
         tuloskentta.setText(getViimeArvo());
 
     }
