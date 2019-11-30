@@ -11,7 +11,7 @@ public class Main {
 
         Statistics stats = new Statistics(new PlayerReaderImpl(url));
 
-        Matcher m = new And( new HasAtLeast(5, "goals"),
+/*        Matcher m = new And( new HasAtLeast(5, "goals"),
                 new HasAtLeast(5, "assists"),
                 new PlaysIn("PHI"), new Not("Travis Konecny")
 
@@ -26,6 +26,13 @@ public class Main {
         );
 
         for (Player player : stats.matches(m2)) {
+            System.out.println(player);
+        }*/
+        Matcher m = new Or( new HasAtLeast(20, "goals"),
+                new HasAtLeast(20, "assists")
+        );
+
+        for (Player player : stats.matches(m)) {
             System.out.println(player);
         }
 
