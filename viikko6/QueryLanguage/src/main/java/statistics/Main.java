@@ -18,25 +18,18 @@ public class Main {
         );
         for (Player player : stats.matches(m)) {
             System.out.println(player);
-        }
-
-        Matcher m2 = new And(
-                new HasFewerThan(1, "goals"),
-                new PlaysIn("NYR")
-        );
-
-        for (Player player : stats.matches(m2)) {
-            System.out.println(player);
         }*/
-        Matcher m = new Or( new HasAtLeast(20, "goals"),
-                new HasAtLeast(20, "assists")
-        );
 
-        for (Player player : stats.matches(m)) {
-            System.out.println(player);
-        }
+        QueryBuilder query = new QueryBuilder();
 
 
+            Matcher m = query.playsIn("NYR")
+                    .hasAtLeast(5, "goals")
+                    .hasFewerThan(10, "goals").build();
+
+            for (Player player : stats.matches(m)) {
+                System.out.println( player );
+            }
 
     }
 }

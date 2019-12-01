@@ -10,6 +10,8 @@ public class And implements Matcher {
         this.matchers = matchers;
     }
 
+
+
     @Override
     public boolean matches(Player p) {
         for (Matcher matcher : matchers) {
