@@ -7,7 +7,6 @@ public class QueryBuilder {
 
     private ArrayList<Matcher>matchers = new ArrayList<>();
 
-
     public QueryBuilder () {
         this.matchers.add(new All());
     }
@@ -33,8 +32,16 @@ public class QueryBuilder {
         return this;
     }
 
+    public QueryBuilder oneOf(Matcher... matchers) {
+        this.matchers.clear();
+        this.matchers.add(new Or(matchers));
+        return this;
+    }
+
     public Matcher build() {
         Matcher[] matchers = this.matchers.toArray(new Matcher[0]);
-        return new And( matchers);
+        Matcher m = new And(matchers);
+        this.matchers.clear();
+        return m;
     }
 }
