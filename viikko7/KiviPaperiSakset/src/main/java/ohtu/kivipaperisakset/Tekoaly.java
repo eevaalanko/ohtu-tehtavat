@@ -1,10 +1,10 @@
 package ohtu.kivipaperisakset;
 
-public class Tekoaly {
+public class Tekoaly implements Vastapelaaja {
 
-    int siirto;
+    private int siirto;
 
-    public Tekoaly() {
+    Tekoaly() {
         siirto = 0;
     }
 
@@ -21,7 +21,7 @@ public class Tekoaly {
         }
     }
 
-    void asetaSiirto(String ekanSiirto) {
-        // ei tehdä mitään 
+    public void asetaSiirto(String ekanSiirto) {
+        // ei tehdä mitään
     }
 }
